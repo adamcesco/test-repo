@@ -93,7 +93,7 @@ TEST_CASE("Check automatic edge cases", "[both solutions]")
             int upperBound = rand() % 500 + 1;
             size_t len = rand() % 300 + 1;
             
-            std::vector<int> input = Create::createVector(len, false, false, lowerBound, upperBound);
+            std::vector<int> input = Create::createIntVector(len, false, false, lowerBound, upperBound);
 
             int resultBrute = SOLUTION2::bruteForceSolution(input);
             int resultOptimized = SOLUTION2::optimizedSolution(input);

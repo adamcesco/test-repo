@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 
 namespace Create {
-std::vector<int> createVector(size_t length, bool sorted, bool revSorted, int lowerBound, int upperBound) {
+std::vector<int> createIntVector(size_t length, bool sorted, bool revSorted, int lowerBound, int upperBound) {
     assert(length != std::string::npos);
     assert(lowerBound < upperBound);
     assert(sorted != revSorted || (sorted == false && revSorted == false));
@@ -23,6 +23,28 @@ std::vector<int> createVector(size_t length, bool sorted, bool revSorted, int lo
     return result;
 }
 
+std::pair<int, int> createInterval(int lowerBound, int upperBound) {
+    assert(lowerBound < upperBound);
+    std::pair<int, int> result;
+    result.first = rand() % (upperBound - lowerBound + 1) + lowerBound;
+    result.second = rand() % (upperBound - lowerBound + 1) + lowerBound;
+    if (result.first > result.second) {
+        std::swap(result.first, result.second);
+    }
+    return result;
+}
+
+std::vector<std::pair<int, int>> createIntervalVector(size_t length, int lowerBound, int upperBound) {
+    assert(length != std::string::npos);
+    assert(lowerBound < upperBound);
+    std::vector<std::pair<int, int>> result;
+    for (size_t i = 0; i < length; i++) {
+        result.push_back(createInterval(lowerBound, upperBound));
+    }
+
+    return result;
+}
+
 std::vector<std::vector<int>> createIntMatrix(size_t rows, size_t columns, bool rowsSorted, bool rowsRevSorted, int cellLowerBound, int cellUpperBound) {
     assert(rows != std::string::npos);
     assert(columns != std::string::npos);
@@ -31,7 +53,7 @@ std::vector<std::vector<int>> createIntMatrix(size_t rows, size_t columns, bool 
 
     std::vector<std::vector<int>> result;
     for (size_t i = 0; i < rows; i++) {
-        result.push_back(createVector(columns, rowsSorted, rowsRevSorted, cellLowerBound, cellUpperBound));
+        result.push_back(createIntVector(columns, rowsSorted, rowsRevSorted, cellLowerBound, cellUpperBound));
     }
 
     return result;
@@ -88,24 +110,6 @@ std::string createString(size_t length, bool hasLowAlpha, bool hasUpAlpha, bool 
     }
 
     return result;
-}
-
-bool hasEvenConsonantsWithMoreVowels(std::string str) {
-    int vowels = 0;
-    int consonants = 0;
-    std::unordered_set<char> uniqueConsonants;
-    std::string vowelChars = "AEIOU";
-    for (char c: str) {
-        if (vowelChars.find_first_of(c) != std::string::npos) {
-            vowels++;
-        } else {
-            consonants++;
-            uniqueConsonants.insert(c);
-        }
-    }
-
-    // return uniqueConsonants.size() < consonants;
-    return uniqueConsonants.size() < consonants && consonants > vowels;
 }
 
 };  // namespace Create
