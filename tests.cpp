@@ -39,60 +39,26 @@ TEST_CASE("Check custom normal cases", "[solution2]")
 
 TEST_CASE("Check automatic edge cases", "[both solutions]")
 {
-    // SECTION("auto testing solution 1"){
-    //     unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
-    //     // unsigned int seed = 0;
-    //     std::cout << "seed = " << seed << std::endl;
-    //     srand(seed);
-
-
-
-    //     int64_t i = 0;
-    //     while (i < INT64_MAX){
-    //         int keyBegin = rand() % -1000000;
-    //         int keyEnd = rand() % 1000000;
-    //         size_t len = rand() % 15 + 1;
-            
-    //         std::string input = Create::createString(len, false, true, false, false, false);
-
-    //         int resultBrute = SOLUTION::bruteForceSolution(input);
-    //         int resultOptimized = SOLUTION::optimizedSolution(input);
-    //         if (resultBrute != resultOptimized){
-    //             std::cout << "seed = " << seed << std::endl;
-    //             std::cout << "input = " << input << std::endl;
-    //             std::cout << "i = " << i << std::endl;
-    //             REQUIRE(resultBrute == resultOptimized);
-    //         }
-
-    //         i++;
-    //     }
-    // }
-    
-    SECTION("auto testing solution 2"){
+    SECTION("auto testing solution 1"){
         unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
         // unsigned int seed = 0;
-        std::cout << "seed = " << seed << std::endl;
+
         srand(seed);
-
-
+        std::cout << "seed = " << seed << std::endl;
 
         int64_t i = 0;
         while (i < INT64_MAX){
-            int lowerBound = 0;
-            int upperBound = rand() % 500 + 1;
-            size_t len = rand() % 300 + 1;
+            int keyBegin = rand() % -1000000;
+            int keyEnd = rand() % 1000000;
+            size_t len = rand() % 5 + 1;
             
-            std::vector<int> input = Create::createIntVector(len, false, false, lowerBound, upperBound);
+            std::string input = Create::createString(len, false, true, false, false, false);
 
-            int resultBrute = SOLUTION2::bruteForceSolution(input);
-            int resultOptimized = SOLUTION2::optimizedSolution(input);
+            int resultBrute = SOLUTION::bruteForceSolution(input);
+            int resultOptimized = SOLUTION::optimizedSolution(input);
             if (resultBrute != resultOptimized){
                 std::cout << "seed = " << seed << std::endl;
-                std::cout << "input = ";
-                for (auto x : input){
-                    std::cout << x << " ";
-                }
-                std::cout << std::endl;
+                std::cout << "input = " << input << std::endl;
                 std::cout << "i = " << i << std::endl;
                 REQUIRE(resultBrute == resultOptimized);
             }
@@ -100,4 +66,36 @@ TEST_CASE("Check automatic edge cases", "[both solutions]")
             i++;
         }
     }
+    
+    // SECTION("auto testing solution 2"){
+    //     unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
+    //     // unsigned int seed = 0;
+    
+    //     srand(seed);
+    //     std::cout << "seed = " << seed << std::endl;
+
+    //     int64_t i = 0;
+    //     while (i < INT64_MAX){
+    //         int lowerBound = 0;
+    //         int upperBound = rand() % 500 + 1;
+    //         size_t len = rand() % 300 + 1;
+            
+    //         std::vector<int> input = Create::createIntVector(len, false, false, lowerBound, upperBound);
+
+    //         int resultBrute = SOLUTION2::bruteForceSolution(input);
+    //         int resultOptimized = SOLUTION2::optimizedSolution(input);
+    //         if (resultBrute != resultOptimized){
+    //             std::cout << "seed = " << seed << std::endl;
+    //             std::cout << "input = ";
+    //             for (auto x : input){
+    //                 std::cout << x << " ";
+    //             }
+    //             std::cout << std::endl;
+    //             std::cout << "i = " << i << std::endl;
+    //             REQUIRE(resultBrute == resultOptimized);
+    //         }
+
+    //         i++;
+    //     }
+    // }
 }

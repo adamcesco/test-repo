@@ -26,18 +26,13 @@ void permute(std::vector<std::string>& perms, std::string& a, int l, int r) {
 
 bool isValid(std::string str) {
     std::string vowels = "AEIOU";
-    if (vowels.find_first_of(str[0]) != std::string::npos) {
-        return false;
-    }
-
-    for (size_t i = 1; i < str.size(); i++) {
-        if (vowels.find_first_of(str[i]) == std::string::npos && vowels.find_first_of(str[i - 1]) == std::string::npos) {
+    bool shouldBeVowel = false;
+    for (size_t i = 0; i < str.size(); i++) {
+        if (shouldBeVowel != (vowels.find_first_of(str[i]) != std::string::npos)) {
             return false;
         }
 
-        if (vowels.find_first_of(str[i]) != std::string::npos && vowels.find_first_of(str[i - 1]) != std::string::npos) {
-            return false;
-        }
+        shouldBeVowel = !shouldBeVowel;
     }
     return true;
 }
