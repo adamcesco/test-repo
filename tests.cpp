@@ -14,14 +14,14 @@ TEST_CASE("Check example cases", "[solution]")
     //     REQUIRE(SOLUTION::bruteForceSolution("ABBCA") == 3);
     //     REQUIRE(SOLUTION::bruteForceSolution("BABBCAA") == 4);
         
-    //     REQUIRE(SOLUTION::solution("BAR") == 2);
-    //     REQUIRE(SOLUTION::solution("AABB") == 1);
-    //     REQUIRE(SOLUTION::solution("AABCY") == 6);
-    //     REQUIRE(SOLUTION::solution("AAAB") == 0);
-    //     REQUIRE(SOLUTION::solution("BABBCAA") == 4);
+        // REQUIRE(SOLUTION::optimizedSolution("BAR") == 2);
+    //     REQUIRE(SOLUTION::optimizedSolution("AABB") == 1);
+    //     REQUIRE(SOLUTION::optimizedSolution("AABCY") == 6);
+    //     REQUIRE(SOLUTION::optimizedSolution("AAAB") == 0);
+    //     REQUIRE(SOLUTION::optimizedSolution("BABBCAA") == 4);
 
     //     std::cout << SOLUTION::bruteForceSolution("BABBCAA") << std::endl;
-    //     std::cout << SOLUTION::solution("BABBCAA") << std::endl;
+    //     std::cout << SOLUTION::optimizedSolution("BABBCAA") << std::endl;
     // }
     
     SECTION("example case 2"){
@@ -67,7 +67,7 @@ TEST_CASE("Check automatic edge cases", "[both solutions]")
     //         std::string input = Create::createString(len, false, true, false, false, false);
 
     //         int resultBrute = SOLUTION::bruteForceSolution(input);
-    //         int resultOptimized = SOLUTION::solution(input);
+    //         int resultOptimized = SOLUTION::optimizedSolution(input);
     //         if (resultBrute != resultOptimized){
     //             std::cout << "seed = " << seed << std::endl;
     //             std::cout << "input = " << input << std::endl;

@@ -2,6 +2,7 @@
 #define THINKCELLASSIGNMENT_SOLUTION_H
 #include <bits/stdc++.h>
 
+// solution for the anagram problem
 namespace SOLUTION {
 
 // ------- SECTION FOR BRUTE FORCE SOLUTION -------
@@ -60,53 +61,7 @@ int bruteForceSolution(std::string val) {
 
 // This is code is contributed by rathbhupendra
 
-// ------- SECTION FOR OPTIMIZED SOLUTION -------
-int optimizedSolution(std::string S) {
-    // count the amount of unique consonants
-    std::unordered_set<char> consonants;
-    std::unordered_set<char> vowels;
-    std::unordered_map<int, int> factorials = {
-        {1, 1},
-        {2, 2},
-        {3, 6},
-        {4, 24},
-        {5, 120},
-        {6, 720},
-        {7, 5040},
-        {8, 40320},
-        {9, 362880},
-        {10, 3628800},
-        {11, 39916800},
-        {12, 479001600},
-        {13, 6227020800},
-        {14, 87178291200},
-        {15, 1307674368000},
-        {16, 20922789888000}};
-    int totalConsonants = 0;
-    int totalVowels = 0;
-    for (char c : S) {
-        if (c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U') {
-            vowels.insert(c);
-            ++totalVowels;
-        } else {
-            consonants.insert(c);
-            ++totalConsonants;
-        }
-    }
-
-    if (totalVowels > totalConsonants || totalConsonants > totalVowels + 1) {
-        return 0;
-    }
-
-    if (totalConsonants == consonants.size()) {
-        return factorials[consonants.size()] * factorials[vowels.size()];
-    }
-
-    return totalConsonants * totalVowels;
-    // return factorials[consonants.size()] * totalVowels;
-}
-
-int solution(std::string s) {
+int optimizedSolution(std::string s) {
     std::unordered_map<char, int> charMap;
     int vowelCount = 0;
     int consonantCount = 0;

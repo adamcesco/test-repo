@@ -2,6 +2,7 @@
 #define THINKCELLASSIGNMENT_SOLUTION2_H
 #include <bits/stdc++.h>
 
+// solution for the frog jump problem
 namespace SOLUTION2 {
 
 // ------- SECTION FOR BRUTE FORCE SOLUTION -------
