@@ -59,8 +59,6 @@ int bruteForceSolution(std::string val) {
     return ans;
 }
 
-// This is code is contributed by rathbhupendra
-
 int optimizedSolution(std::string s) {
     std::unordered_map<char, int> charMap;
     int vowelCount = 0;

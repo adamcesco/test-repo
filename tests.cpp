@@ -6,29 +6,24 @@
 
 TEST_CASE("Check example cases", "[solution]")
 {
-    // SECTION("example case 1"){
-    //     REQUIRE(SOLUTION::bruteForceSolution("BAR") == 2);
-    //     REQUIRE(SOLUTION::bruteForceSolution("AABB") == 1);
-    //     REQUIRE(SOLUTION::bruteForceSolution("AABCY") == 6);
-    //     REQUIRE(SOLUTION::bruteForceSolution("AAAB") == 0);
-    //     REQUIRE(SOLUTION::bruteForceSolution("ABBCA") == 3);
-    //     REQUIRE(SOLUTION::bruteForceSolution("BABBCAA") == 4);
+    SECTION("example case 1"){
+        REQUIRE(SOLUTION::bruteForceSolution("BAR") == 2);
+        REQUIRE(SOLUTION::bruteForceSolution("AABB") == 1);
+        REQUIRE(SOLUTION::bruteForceSolution("AABCY") == 6);
+        REQUIRE(SOLUTION::bruteForceSolution("AAAB") == 0);
+        REQUIRE(SOLUTION::bruteForceSolution("ABBCA") == 3);
+        REQUIRE(SOLUTION::bruteForceSolution("BABBCAA") == 4);
         
-        // REQUIRE(SOLUTION::optimizedSolution("BAR") == 2);
-    //     REQUIRE(SOLUTION::optimizedSolution("AABB") == 1);
-    //     REQUIRE(SOLUTION::optimizedSolution("AABCY") == 6);
-    //     REQUIRE(SOLUTION::optimizedSolution("AAAB") == 0);
-    //     REQUIRE(SOLUTION::optimizedSolution("BABBCAA") == 4);
+        REQUIRE(SOLUTION::optimizedSolution("BAR") == 2);
+        REQUIRE(SOLUTION::optimizedSolution("AABB") == 1);
+        REQUIRE(SOLUTION::optimizedSolution("AABCY") == 6);
+        REQUIRE(SOLUTION::optimizedSolution("AAAB") == 0);
+        REQUIRE(SOLUTION::optimizedSolution("BABBCAA") == 4);
 
-    //     std::cout << SOLUTION::bruteForceSolution("BABBCAA") << std::endl;
-    //     std::cout << SOLUTION::optimizedSolution("BABBCAA") << std::endl;
-    // }
-    
-    SECTION("example case 2"){
+        std::cout << SOLUTION::bruteForceSolution("BABBCAA") << std::endl;
+        std::cout << SOLUTION::optimizedSolution("BABBCAA") << std::endl;
     }
     
-    SECTION("example case 3"){
-    }
 }
 
 TEST_CASE("Check custom normal cases", "[solution2]")
@@ -39,12 +34,6 @@ TEST_CASE("Check custom normal cases", "[solution2]")
         REQUIRE(SOLUTION2::bruteForceSolution({1, 1}) == 2);
         REQUIRE(SOLUTION2::bruteForceSolution({1, 2, 3, 4, 5}) == 5);
         REQUIRE(SOLUTION2::bruteForceSolution({1, 5, 5, 2, 6}) == 4);
-    }
-}
-
-TEST_CASE("Check custom edge cases", "[solution2]")
-{
-    SECTION("edge case 1"){
     }
 }
 
@@ -79,7 +68,7 @@ TEST_CASE("Check automatic edge cases", "[both solutions]")
     //     }
     // }
     
-    SECTION("auto testing solution 1"){
+    SECTION("auto testing solution 2"){
         unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
         // unsigned int seed = 0;
         std::cout << "seed = " << seed << std::endl;
