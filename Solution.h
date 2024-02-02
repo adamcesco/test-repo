@@ -106,100 +106,55 @@ int optimizedSolution(std::string S) {
     // return factorials[consonants.size()] * totalVowels;
 }
 
-#define ll long long
-#define mod 1000000007
-#define N 1000001
-using namespace std;
+int solution(std::string s) {
+    std::unordered_map<char, int> charMap;
+    int vowelCount = 0;
+    int consonantCount = 0;
 
-// Function to compute factorials till N
-void Precomputefact(unordered_map<ll, ll>& fac) {
-    ll ans = 1;
+    for (char ch: s) {
+        charMap.emplace(ch, 0).first->second++;
 
-    // Iterate in the range [1, N]
-    for (ll i = 1; i <= N; i++) {
-        // Update ans to ans*i
-        ans = (ans * i) % mod;
-
-        // Store the value of ans
-        // in fac[i]
-        fac[i] = ans;
-    }
-    return;
-}
-
-// Function to check whether the
-// current character is a vowel or not
-bool isVowel(char a) {
-    if (a == 'A' || a == 'E' || a == 'I' || a == 'O' || a == 'U')
-        return true;
-    else
-        return false;
-}
-
-// Function to count the number of
-// anagrams of S satisfying the
-// given condition
-int countAnagrams(string s) {
-    int n = s.size();
-    // Store the factorials upto N
-    unordered_map<ll, ll> fac;
-
-    // Function Call to generate
-    // all factorials upto n
-    Precomputefact(fac);
-
-    // Create a hashmap to store
-    // frequencies of all characters
-    unordered_map<char, ll> count;
-
-    // Store the count of
-    // vowels and consonants
-    int vo = 0, co = 0;
-
-    // Iterate through all
-    // characters in the string
-    for (int i = 0; i < n; i++) {
-        // Update the frequency
-        // of current character
-        count[s[i]]++;
-
-        // Check if the character
-        // is vowel or consonant
-        if (isVowel(s[i]))
-            vo++;
-        else
-            co++;
-    }
-
-    // Check if ?C==?V+1 or ?C==?V
-    if ((co == vo + 1) || (co == vo)) {
-        // Store the denominator
-        ll deno = 1;
-
-        // Calculate the denominator
-        // of the expression
-        for (auto c : count) {
-            // Multiply denominator by factorial
-            // of counts of all letters
-            deno = (deno * fac[c.second]) % mod;
+        if (ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U') {
+            vowelCount++;
         }
-
-        // Store the numerator
-        ll nume = fac[co] % mod;
-        nume = (nume * fac[vo]) % mod;
-
-        // Store the answer by dividing
-        // numerator by denominator
-        ll ans = nume / deno;
-
-        // Print the answer
-        return ans;
+        else{
+            consonantCount++;
+        }
+    }
+    
+    if (consonantCount != vowelCount + 1 && consonantCount != vowelCount) {
+        return 0;
     }
 
-    // Otherwise, print 0
-    else {
-       return 0;
+    int MOD =  1e9 + 7;
+    std::vector<long> factorials = {
+        1,
+        1,
+        2,
+        6,
+        24,
+        120,
+        720,
+        5040,
+        40320,
+        362880,
+        3628800,
+        39916800,
+        479001600,
+        6227020800,
+        87178291200,
+        1307674368000,
+        20922789888000
+    };
+
+    int factorialsOfAllLetters = 1;
+    for (auto ch : charMap) {
+        factorialsOfAllLetters = (factorialsOfAllLetters * factorials[ch.second]) % MOD;
     }
+
+    int factorialsOfCounts = factorials[consonantCount] % MOD;
+    factorialsOfCounts = (factorialsOfCounts * factorials[vowelCount]) % MOD;
+    return factorialsOfCounts / factorialsOfAllLetters;
 }
 
 };  // namespace SOLUTION
