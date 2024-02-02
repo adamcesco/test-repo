@@ -47,7 +47,7 @@ TEST_CASE("Check automatic edge cases", "[solution]")
             //     std::cout << "redflag" << std::endl;
             // }
 
-            std::vector<int> vec = Create::createVector(len, false, keyBegin, keyEnd);
+            std::vector<int> vec = Create::createVector(len, false, false, keyBegin, keyEnd);
             size_t randVal = rand() % 100;
             // do something with vec
         }
