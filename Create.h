@@ -89,4 +89,23 @@ std::string createString(size_t length, bool hasLowAlpha, bool hasUpAlpha, bool 
 
     return result;
 }
+
+bool hasEvenConsonantsWithMoreVowels(std::string str) {
+    int vowels = 0;
+    int consonants = 0;
+    std::unordered_set<char> uniqueConsonants;
+    std::string vowelChars = "AEIOU";
+    for (char c: str) {
+        if (vowelChars.find_first_of(c) != std::string::npos) {
+            vowels++;
+        } else {
+            consonants++;
+            uniqueConsonants.insert(c);
+        }
+    }
+
+    // return uniqueConsonants.size() < consonants;
+    return uniqueConsonants.size() < consonants && consonants > vowels;
+}
+
 };  // namespace Create
