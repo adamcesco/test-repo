@@ -56,25 +56,24 @@ int bruteForceSolution(std::string val) {
 
 int optimizedSolution(std::string s) {
     std::unordered_map<char, int> charMap;
-    int vowelCount = 0;
-    int consonantCount = 0;
+    int group1Count = 0;
+    int group2Count = 0;
 
-    for (char ch: s) {
+    for (char ch : s) {
         charMap.emplace(ch, 0).first->second++;
 
         if (ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U') {
-            vowelCount++;
-        }
-        else{
-            consonantCount++;
+            group1Count++;
+        } else {
+            group2Count++;
         }
     }
-    
-    if (consonantCount != vowelCount + 1 && consonantCount != vowelCount) {
+
+    if (group2Count != group1Count + 1 && group2Count != group1Count) {
         return 0;
     }
 
-    int MOD =  1e9 + 7;
+    int MOD = 1e9 + 7;
     std::vector<long> factorials = {
         1,
         1,
@@ -92,19 +91,19 @@ int optimizedSolution(std::string s) {
         6227020800,
         87178291200,
         1307674368000,
-        20922789888000
-    };
+        20922789888000};
 
     int factorialsOfAllLetters = 1;
     for (auto ch : charMap) {
         factorialsOfAllLetters = (factorialsOfAllLetters * factorials[ch.second]) % MOD;
     }
 
-    int factorialsOfCounts = factorials[consonantCount] % MOD;
-    factorialsOfCounts = (factorialsOfCounts * factorials[vowelCount]) % MOD;
+    int factorialsOfCounts = factorials[group2Count] % MOD;
+    factorialsOfCounts = (factorialsOfCounts * factorials[group1Count]) % MOD;
     return factorialsOfCounts / factorialsOfAllLetters;
 }
 
 };  // namespace SOLUTION
 
 #endif
+
