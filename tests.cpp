@@ -1,80 +1,55 @@
 #define CATCH_CONFIG_MAIN
-#include "catch2/catch.hpp"
-#include "Solution.h"
 #include "Create.h"
+#include "Solution.h"
+#include "catch2/catch.hpp"
 
-TEST_CASE("Check example cases", "[solution]")
-{
-    SECTION("example case 1"){
-        REQUIRE(SOLUTION::bruteForceSolution("BAR") == 2);
-        REQUIRE(SOLUTION::bruteForceSolution("AABB") == 1);
-        REQUIRE(SOLUTION::bruteForceSolution("AABCY") == 6);
-        // REQUIRE(SOLUTION::bruteForceSolution("AAAB") == 0);
-        REQUIRE(SOLUTION::bruteForceSolution("ABBCA") == 3);
-        REQUIRE(SOLUTION::bruteForceSolution("BABBCAA") == 4);
-        
-        REQUIRE(SOLUTION::countAnagrams("BAR") == 2);
-        REQUIRE(SOLUTION::countAnagrams("AABB") == 1);
-        REQUIRE(SOLUTION::countAnagrams("AABCY") == 6);
-        REQUIRE(SOLUTION::countAnagrams("AAAB") == 0);
-        REQUIRE(SOLUTION::countAnagrams("BABBCAA") == 4);
-
-        std::cout << SOLUTION::bruteForceSolution("BABBCAA") << std::endl;
-        std::cout << SOLUTION::countAnagrams("BABBCAA") << std::endl;
-    }
-    
-    SECTION("example case 2"){
-    }
-    
-    SECTION("example case 3"){
-    }
-}
-
-TEST_CASE("Check custom normal cases", "[solution]")
-{
-    SECTION("normal case 1"){
-    }
-}
-
-TEST_CASE("Check custom edge cases", "[solution]")
-{
-    SECTION("edge case 1"){
-    }
-}
-
-TEST_CASE("Check automatic edge cases", "[solution]")
-{
-    SECTION("auto testing"){
-        // unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
+TEST_CASE("Check automatic edge cases", "[solution]") {
+    SECTION("auto test case generating") {
         unsigned int seed = 0;
+        // unsigned int seed = rand();
         std::cout << "seed = " << seed << std::endl;
         srand(seed);
 
+        size_t correctCount = 0;
 
+        while (true) {
+            size_t len = rand() % 100 + 10;
+            size_t varientsCount = rand() % 5 + 3;
 
-        int64_t i = 0;
-        while (i < INT64_MAX){
-            int keyBegin = rand() % -1000000;
-            int keyEnd = rand() % 1000000;
-            size_t len = rand() % 5 + 3;
-            
-            std::string input = Create::createString(len, false, true, false, false, false);
+            auto vec = Create::createStuff3Vector(len, varientsCount);
 
-            if (Create::hasEvenConsonantsWithMoreVowels(input) == true){
-                continue;
-            }
-            std::cout << input << std::endl;
-
-            int resultBrute = SOLUTION::bruteForceSolution(input);
-            int resultOptimized = SOLUTION::countAnagrams(input);
-            if (resultBrute != resultOptimized){
-                std::cout << "seed = " << seed << std::endl;
-                std::cout << "input = " << input << std::endl;
-                std::cout << "i = " << i << std::endl;
-                REQUIRE(resultBrute == resultOptimized);
+            if (correctCount == 37306) {
+                std::cout << "RED FLAG" << std::endl;
             }
 
-            i++;
+            auto res1 = SOLUTION::Decision1(vec);
+            auto res2 = SOLUTION::Decision4(vec);
+            if (res1.first == res2.first) {
+                if (res1.first == false || (res1.first == true && res1.second == res2.second)) {
+                    correctCount++;
+                    continue;
+                }
+            }
+
+            std::cout << "correctCount = " << correctCount << std::endl;
+            std::cout << "len = " << len << std::endl;
+            std::cout << "varientsCount = " << varientsCount << std::endl;
+            for (auto& v : vec) {
+                std::cout << v << " ";
+            }
+            std::cout << std::endl;
+            if (res1.first) {
+                std::cout << "SOLUTION::solution1 = " << res1.second << std::endl;
+            } else {
+                std::cout << "SOLUTION::solution1 = no majority found" << std::endl;
+            }
+            if (res2.first) {
+                std::cout << "SOLUTION::solution2 = " << res2.second << std::endl;
+            } else {
+                std::cout << "SOLUTION::solution2 = no majority found" << std::endl;
+            }
+
+            break;
         }
     }
 }

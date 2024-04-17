@@ -10,5 +10,5 @@ set(CMAKE_VERBOSE_MAKEFILE OFF)
 
 # testing with the single_include versions of Catch2 V2 (in directory catch2)
 include(CTest)
-add_executable(tests tests.cpp Solution.h Create.h)
+add_executable(tests tests.cpp Solution.h Create.h Stuff3.h)
 add_test(NAME TestAssignment COMMAND tests)

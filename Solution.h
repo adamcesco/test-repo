@@ -2,204 +2,271 @@
 #define THINKCELLASSIGNMENT_SOLUTION_H
 #include <bits/stdc++.h>
 
+#include "Stuff3.h"
+
 namespace SOLUTION {
 
-// ------- SECTION FOR BRUTE FORCE SOLUTION -------
-void permute(std::vector<std::string>& perms, std::string& a, int l, int r) {
-    if (l == r)
-        perms.push_back(a);
-    else {
-        // Permutations made
-        for (int i = l; i <= r; i++) {
-            // Swapping done
-            std::swap(a[l], a[i]);
+// pair<bool, Stuff3> countMajority(vector<Stuff3> &vec, int low, int high, pair<bool, Stuff3> left, pair<bool, Stuff3> right) {
+//     int counterLeft = 0;
+//     int counterRight = 0;
 
-            // Recursion called
-            permute(perms, a, l + 1, r);
+//     for (int i = low; i <= high; i++) {
+//         Stuff3 currStuff = vec.at(i);
+//         if (left.first == true && currStuff == left.second) {
+//             counterLeft++;
+//         } else if (right.first == true && currStuff == right.second) {
+//             counterRight++;
+//         }
+//     }
 
-            // backtrack
-            std::swap(a[l], a[i]);
+//     int currMajority = ((high - low + 1) / 2) + 1;
+
+//     if (counterLeft >= currMajority) {
+//         return make_pair(true, left.second);
+//     } else if (counterRight >= currMajority) {
+//         return make_pair(true, right.second);
+//     }
+// }
+
+int countOf(vector<Stuff3> &vec, int low, int high, Stuff3 &left) {
+    int count = 0;
+
+    for (int i = low; i <= high; i++) {
+        if (vec.at(i) == left) {
+            count++;
         }
+    }
+
+    return count;
+}
+
+// you should modify the code for this one
+// you can also change the parameters.
+// If you do that. make sure you change that for the call from Decision1()
+pair<bool, Stuff3> DecisionRecur1(vector<Stuff3> &vec, int low, int high) {
+    if (high - low <= 0) {
+        return make_pair(true, vec.at(low));
+    }
+
+    int mid = low + (high - low) / 2;
+
+    pair<bool, Stuff3> left = DecisionRecur1(vec, low, mid);
+    pair<bool, Stuff3> right = DecisionRecur1(vec, mid + 1, high);
+
+    if (left.first == true && right.first == true && left.second == right.second) {
+        return make_pair(true, left.second);
+    }
+
+    // check if left or right is a majority and return it
+    int countLeft = countOf(vec, low, high, left.second);
+    int countRight = countOf(vec, low, high, right.second);
+
+    if (countLeft > countRight && countLeft > (high - low + 1) / 2) {
+        return make_pair(true, left.second);
+    } else if (countRight > countLeft && countRight > (high - low + 1) / 2) {
+        return make_pair(true, right.second);
+    } else {
+        return make_pair(false, Stuff3());
     }
 }
 
-bool isValid(std::string str) {
-    std::string vowels = "AEIOU";
-    if (vowels.find_first_of(str[0]) != std::string::npos) {
-        return false;
-    }
+pair<bool, Stuff3> Decision1(vector<Stuff3> &vec) {
+    // TODO - check if vector is empty
 
-    for (size_t i = 1; i < str.size(); i++) {
-        if (vowels.find_first_of(str[i]) == std::string::npos && vowels.find_first_of(str[i - 1]) == std::string::npos) {
-            return false;
-        }
-
-        if (vowels.find_first_of(str[i]) != std::string::npos && vowels.find_first_of(str[i - 1]) != std::string::npos) {
-            return false;
-        }
-    }
-    return true;
+    // you can change this line if you decide to change the parameters for DecisionRecur1
+    return DecisionRecur1(vec, 0, vec.size() - 1);
 }
 
-int bruteForceSolution(std::string val) {
-    std::vector<std::string> perms;
-    permute(perms, val, 0, val.size() - 1);
-
-    // remove duplicate strings from perms
-    std::sort(perms.begin(), perms.end());
-    perms.erase(std::unique(perms.begin(), perms.end()), perms.end());
-
-    int ans = 0;
-    for (std::string& perm : perms) {
-        if (isValid(perm)) {
-            ans++;
+int getCountOfFromRes(vector<pair<int, Stuff3>> &res, Stuff3 &stuff) {
+    for (size_t i = 1; i < res.size(); i++) {
+        if (res[i].second == stuff) {
+            return res[i].first;
         }
     }
-    return ans;
+
+    return 0;
 }
 
-// This is code is contributed by rathbhupendra
-
-// ------- SECTION FOR OPTIMIZED SOLUTION -------
-int optimizedSolution(std::string S) {
-    // count the amount of unique consonants
-    std::unordered_set<char> consonants;
-    std::unordered_set<char> vowels;
-    std::unordered_map<int, int> factorials = {
-        {1, 1},
-        {2, 2},
-        {3, 6},
-        {4, 24},
-        {5, 120},
-        {6, 720},
-        {7, 5040},
-        {8, 40320},
-        {9, 362880},
-        {10, 3628800},
-        {11, 39916800},
-        {12, 479001600},
-        {13, 6227020800},
-        {14, 87178291200},
-        {15, 1307674368000},
-        {16, 20922789888000}};
-    int totalConsonants = 0;
-    int totalVowels = 0;
-    for (char c : S) {
-        if (c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U') {
-            vowels.insert(c);
-            ++totalVowels;
+// you should modify the code for this one
+// you can also change the parameters.
+// If you do that. make sure you change that for the call from Decision2()
+vector<pair<int, Stuff3>> DecisionRecur2(vector<Stuff3> &vec, int low, int high) {
+    int currSize = high - low + 1;
+    if (currSize <= 0) {
+        return {make_pair(false, Stuff3()), make_pair(0, Stuff3()), make_pair(0, Stuff3())};
+    } else if (currSize == 1) {
+        return {make_pair(true, vec.at(low)), make_pair(1, vec.at(low))};
+    } else if (currSize == 2) {
+        if (vec.at(low) == vec.at(low + 1)) {
+            return {make_pair(true, vec.at(low)), make_pair(2, vec.at(low))};
         } else {
-            consonants.insert(c);
-            ++totalConsonants;
+            return {make_pair(false, Stuff3()), make_pair(1, vec.at(low)), make_pair(1, vec.at(low + 1))};
+        }
+    } else if (currSize == 3) {
+        // get the majority of the 3 elements
+        if (vec.at(low) == vec.at(low + 1) && vec.at(low + 1) == vec.at(low + 2)) {
+            return {make_pair(true, vec.at(low)), make_pair(3, vec.at(low))};
+        } else if (vec.at(low) == vec.at(low + 1)) {
+            return {make_pair(true, vec.at(low)), make_pair(2, vec.at(low)), make_pair(1, vec.at(low + 2))};
+        } else if (vec.at(low) == vec.at(low + 2)) {
+            return {make_pair(true, vec.at(low)), make_pair(2, vec.at(low)), make_pair(1, vec.at(low + 1))};
+        } else if (vec.at(low + 1) == vec.at(low + 2)) {
+            return {make_pair(true, vec.at(low + 1)), make_pair(2, vec.at(low + 1)), make_pair(1, vec.at(low))};
+        } else {
+            return {make_pair(false, Stuff3()), make_pair(1, vec.at(low)), make_pair(1, vec.at(low + 1)), make_pair(1, vec.at(low + 2))};
         }
     }
 
-    if (totalVowels > totalConsonants || totalConsonants > totalVowels + 1) {
-        return 0;
+    int mid = low + (high - low) / 2;
+
+    vector<pair<int, Stuff3>> resLeft = DecisionRecur2(vec, low, mid);
+    vector<pair<int, Stuff3>> resRight = DecisionRecur2(vec, mid + 1, high);
+    pair<bool, Stuff3> left = {resLeft[0].first, resLeft[0].second};
+    pair<bool, Stuff3> right = {resRight[0].first, resRight[0].second};
+    if (low == 0 && high == vec.size() - 1) {
+        int countLeft = (left.first == false) ? 0 : countOf(vec, low, high, left.second);
+        int countRight = (right.first == false) ? 0 : countOf(vec, low, high, right.second);
+
+        if (countLeft > currSize / 2) {
+            return {make_pair(true, left.second)};
+        } else if (countRight > currSize / 2) {
+            return {make_pair(true, right.second)};
+        } else {
+            return {make_pair(false, Stuff3()), make_pair(0, Stuff3()), make_pair(0, Stuff3())};
+        }
     }
 
-    if (totalConsonants == consonants.size()) {
-        return factorials[consonants.size()] * factorials[vowels.size()];
+    int countLeft = (left.first == false) ? 0 : (getCountOfFromRes(resLeft, left.second) + getCountOfFromRes(resRight, left.second));
+    int countRight = (right.first == false) ? 0 : (getCountOfFromRes(resLeft, right.second) + getCountOfFromRes(resRight, right.second));
+
+    if (left.first ^ right.first) {
+        if (left.first) {
+            return {make_pair(true, left.second), make_pair(countLeft, left.second)};
+        } else {
+            return {make_pair(true, right.second), make_pair(countRight, right.second)};
+        }
+    } else if (left.first == false && right.first == false) {
+        return {make_pair(false, Stuff3())};
     }
 
-    return totalConsonants * totalVowels;
-    // return factorials[consonants.size()] * totalVowels;
+    if (left.second == right.second) {
+        return {make_pair(true, left.second), make_pair(countLeft, left.second)};
+    }
+
+    if (countLeft > countRight) {
+        return {make_pair(true, left.second), make_pair(countLeft, left.second), make_pair(countRight, right.second)};
+    } else if (countRight > countLeft) {
+        return {make_pair(true, right.second), make_pair(countRight, right.second), make_pair(countLeft, left.second)};
+    } else {
+        return {make_pair(false, Stuff3()), make_pair(countLeft, left.second), make_pair(countRight, right.second)};
+    }
 }
 
-#define ll long long
-#define mod 1000000007
-#define N 1000001
-using namespace std;
-
-// Function to compute factorials till N
-void Precomputefact(unordered_map<ll, ll>& fac) {
-    ll ans = 1;
-
-    // Iterate in the range [1, N]
-    for (ll i = 1; i <= N; i++) {
-        // Update ans to ans*i
-        ans = (ans * i) % mod;
-
-        // Store the value of ans
-        // in fac[i]
-        fac[i] = ans;
-    }
-    return;
+pair<bool, Stuff3> Decision2(vector<Stuff3> &vec) {
+    auto res = DecisionRecur2(vec, 0, vec.size() - 1);
+    return {res[0].first, res[0].second};
 }
 
-// Function to check whether the
-// current character is a vowel or not
-bool isVowel(char a) {
-    if (a == 'A' || a == 'E' || a == 'I' || a == 'O' || a == 'U')
-        return true;
-    else
-        return false;
-}
+//---------------------------------------------------------------------------------
 
-// Function to count the number of
-// anagrams of S satisfying the
-// given condition
-int countAnagrams(string s) {
-    int n = s.size();
-    // Store the factorials upto N
-    unordered_map<ll, ll> fac;
-
-    // Function Call to generate
-    // all factorials upto n
-    Precomputefact(fac);
-
-    // Create a hashmap to store
-    // frequencies of all characters
-    unordered_map<char, ll> count;
-
-    // Store the count of
-    // vowels and consonants
-    int vo = 0, co = 0;
-
-    // Iterate through all
-    // characters in the string
-    for (int i = 0; i < n; i++) {
-        // Update the frequency
-        // of current character
-        count[s[i]]++;
-
-        // Check if the character
-        // is vowel or consonant
-        if (isVowel(s[i]))
-            vo++;
-        else
-            co++;
+pair<bool, Stuff3> DecisionRecur3(vector<Stuff3> &vec) {
+    Stuff3 candidate;
+    int count = 0;
+    for (size_t i = 0; i < vec.size(); i++) {
+        if (count == 0) {
+            candidate = vec.at(i);
+            count = 1;
+        } else if (candidate == vec.at(i)) {
+            count++;
+        } else {
+            count--;
+        }
     }
 
-    // Check if ?C==?V+1 or ?C==?V
-    if ((co == vo + 1) || (co == vo)) {
-        // Store the denominator
-        ll deno = 1;
+    int candidateCount = countOf(vec, 0, vec.size() - 1, candidate);
+    return {candidateCount > vec.size() / 2, candidate};
+}
 
-        // Calculate the denominator
-        // of the expression
-        for (auto c : count) {
-            // Multiply denominator by factorial
-            // of counts of all letters
-            deno = (deno * fac[c.second]) % mod;
+pair<bool, Stuff3> Decision3(vector<Stuff3> &vec) {
+    return DecisionRecur3(vec);
+}
+
+// --------------------------------------------------------------------------------
+
+pair<int, Stuff3> DecisionRecur4(vector<Stuff3> &arr, int left, int right, int count, Stuff3 candidate) {
+    if (right == left) {
+        if (count == 0 || arr[left] == candidate) {
+            return {count + 1, arr[left]};
+        }
+        return {count - 1, candidate};
+    }
+    if (right - left == 1) {
+        if (count == 0) {
+            if (arr[left] == arr[right]) {
+                return {2, arr[left]};
+            }
+            return {0, arr[right]};
+        }
+        if (count == 1) {
+            if (arr[left] == candidate) {
+                return {2 + (arr[right] == candidate ? 1 : -1), candidate};
+            }
+            return {1, arr[right]};
         }
 
-        // Store the numerator
-        ll nume = fac[co] % mod;
-        nume = (nume * fac[vo]) % mod;
-
-        // Store the answer by dividing
-        // numerator by denominator
-        ll ans = nume / deno;
-
-        // Print the answer
-        return ans;
+        count += (arr[left] == candidate ? 1 : -1);
+        count += (arr[right] == candidate ? 1 : -1);
+        return {count, candidate};
     }
 
-    // Otherwise, print 0
-    else {
-       return 0;
+    int mid = left + (right - left) / 2;
+    auto leftRes = DecisionRecur4(arr, left, mid, count, candidate);
+    auto rightRes = DecisionRecur4(arr, mid + 1, right, leftRes.first, leftRes.second);
+
+    if (left == 0 && right == arr.size() - 1) {
+        int count = countOf(arr, left, right, rightRes.second);
+        return {count > arr.size() / 2, rightRes.second};
     }
+
+    return rightRes;
+}
+
+pair<bool, Stuff3> Decision4(vector<Stuff3> &vec) {
+    return DecisionRecur4(vec, 0, vec.size() - 1, 0, Stuff3());
+}
+
+// --------------------------------------------------------------------------------
+
+pair<int, Stuff3> DecisionRecur5(vector<Stuff3> &arr, Stuff3 candidate, int count, int index) {
+    if (index == arr.size()) {
+        return {true, candidate};
+    }
+
+    if (count == 0) {
+        candidate = arr[index];
+        count = 1;
+    } else if (arr[index] == candidate) {
+        count++;
+    } else {
+        count--;
+    }
+
+    return DecisionRecur5(arr, candidate, count, index + 1);
+}
+
+bool validateCandidate(const vector<Stuff3> &arr, Stuff3 candidate) {
+    int count = 0;
+    for (auto& num : arr) {
+        if (num == candidate) {
+            count++;
+        }
+    }
+    return count > arr.size() / 2;
+}
+
+pair<bool, Stuff3> Decision5(vector<Stuff3> &arr) {
+    auto candidate = DecisionRecur5(arr, Stuff3(), 0, 0);
+    return {validateCandidate(arr, candidate.second), candidate.second};
 }
 
 };  // namespace SOLUTION

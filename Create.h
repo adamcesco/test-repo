@@ -1,6 +1,21 @@
 #include <bits/stdc++.h>
+#include "Stuff3.h"
 
 namespace Create {
+std::vector<Stuff3> createStuff3Vector(size_t length, size_t varientsCount) {
+    std::vector<Stuff3> varients;
+    for (size_t i = 0; i < varientsCount; i++) {
+        varients.push_back(Stuff3());
+    }
+
+    std::vector<Stuff3> result;
+    for (size_t i = 0; i < length; i++) {
+        result.push_back(varients[rand() % varientsCount]);
+    }
+
+    return result;
+}
+
 std::vector<int> createVector(size_t length, bool sorted, bool revSorted, int lowerBound, int upperBound) {
     assert(length != std::string::npos);
     assert(lowerBound < upperBound);
@@ -95,7 +110,7 @@ bool hasEvenConsonantsWithMoreVowels(std::string str) {
     int consonants = 0;
     std::unordered_set<char> uniqueConsonants;
     std::string vowelChars = "AEIOU";
-    for (char c: str) {
+    for (char c : str) {
         if (vowelChars.find_first_of(c) != std::string::npos) {
             vowels++;
         } else {
