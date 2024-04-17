@@ -23,7 +23,7 @@ TEST_CASE("Check automatic edge cases", "[solution]") {
             }
 
             auto res1 = SOLUTION::Decision1(vec);
-            auto res2 = SOLUTION::Decision4(vec);
+            auto res2 = SOLUTION::Decision2(vec);
             if (res1.first == res2.first) {
                 if (res1.first == false || (res1.first == true && res1.second == res2.second)) {
                     correctCount++;
