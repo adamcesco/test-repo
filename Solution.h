@@ -6,28 +6,6 @@
 
 namespace SOLUTION {
 
-// pair<bool, Stuff3> countMajority(vector<Stuff3> &vec, int low, int high, pair<bool, Stuff3> left, pair<bool, Stuff3> right) {
-//     int counterLeft = 0;
-//     int counterRight = 0;
-
-//     for (int i = low; i <= high; i++) {
-//         Stuff3 currStuff = vec.at(i);
-//         if (left.first == true && currStuff == left.second) {
-//             counterLeft++;
-//         } else if (right.first == true && currStuff == right.second) {
-//             counterRight++;
-//         }
-//     }
-
-//     int currMajority = ((high - low + 1) / 2) + 1;
-
-//     if (counterLeft >= currMajority) {
-//         return make_pair(true, left.second);
-//     } else if (counterRight >= currMajority) {
-//         return make_pair(true, right.second);
-//     }
-// }
-
 int countOf(vector<Stuff3> &vec, int low, int high, Stuff3 &left) {
     int count = 0;
 
@@ -71,20 +49,7 @@ pair<bool, Stuff3> DecisionRecur1(vector<Stuff3> &vec, int low, int high) {
 }
 
 pair<bool, Stuff3> Decision1(vector<Stuff3> &vec) {
-    // TODO - check if vector is empty
-
-    // you can change this line if you decide to change the parameters for DecisionRecur1
     return DecisionRecur1(vec, 0, vec.size() - 1);
-}
-
-int getCountOfFromRes(vector<pair<int, Stuff3>> &res, Stuff3 &stuff) {
-    for (size_t i = 1; i < res.size(); i++) {
-        if (res[i].second == stuff) {
-            return res[i].first;
-        }
-    }
-
-    return 0;
 }
 
 // --------------------------------------------------------------------------------
